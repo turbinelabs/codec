@@ -47,3 +47,13 @@ func (_m *MockFromFlags) Make() Codec {
 func (_mr *_MockFromFlagsRecorder) Make() *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Make")
 }
+
+func (_m *MockFromFlags) Type() string {
+	ret := _m.ctrl.Call(_m, "Type")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+func (_mr *_MockFromFlagsRecorder) Type() *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Type")
+}

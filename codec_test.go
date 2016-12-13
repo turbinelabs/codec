@@ -46,6 +46,10 @@ func TestCodecEncodeDecodeJson(t *testing.T) {
 	testCodecEncodeDecodeJson(t, NewJson())
 }
 
+func TestCodecEncodeDecodeJsonMin(t *testing.T) {
+	testCodecEncodeDecode(t, NewJsonMin(), `[1,2,3]`)
+}
+
 func testCodecEncodeDecodeJson(t *testing.T, e Codec) {
 	testCodecEncodeDecode(t, e, `[
   1,
@@ -63,4 +67,22 @@ func testCodecEncodeDecodeYaml(t *testing.T, e Codec) {
 - 2
 - 3
 `)
+}
+
+func TestEncodeToString(t *testing.T) {
+	c := NewJsonMin()
+	m := map[string]int{"one": 1, "two": 2}
+	got, err := EncodeToString(c, m)
+	assert.Nil(t, err)
+	assert.Equal(t, got, `{"one":1,"two":2}`)
+}
+
+func TestDecodeFromString(t *testing.T) {
+	c := NewJsonMin()
+	want := map[string]int{"one": 1, "two": 2}
+	in := `{"one":1,"two":2}`
+	got := map[string]int{}
+	err := DecodeFromString(c, in, &got)
+	assert.Nil(t, err)
+	assert.DeepEqual(t, got, want)
 }

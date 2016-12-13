@@ -14,6 +14,9 @@ type FromFlags interface {
 
 	// Make produces a new Codec from the provided flags
 	Make() Codec
+
+	// Type returns the type of the codec.
+	Type() string
 }
 
 // NewFromFlags produces a FromFlags, and installs necessary
@@ -40,4 +43,8 @@ func (ff *fromFlags) Validate() error {
 		return fmt.Errorf("unsupported format: %s", ff.format)
 	}
 	return nil
+}
+
+func (ff *fromFlags) Type() string {
+	return ff.format
 }

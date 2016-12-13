@@ -3,6 +3,7 @@ package codec
 //go:generate mockgen -source $GOFILE -destination mock_$GOFILE -package $GOPACKAGE
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"io/ioutil"
@@ -22,11 +23,23 @@ type Codec interface {
 	Decode(io.Reader, interface{}) error
 }
 
-// NewYaml produces an Codec that reads and writes to JSON
+// NewJson produces a Codec that reads and writes to JSON. The JSON produced
+// by Encode is prettified for human consumption.
 func NewJson() Codec {
 	return codec{
 		func(v interface{}) ([]byte, error) {
 			return json.MarshalIndent(v, "", "  ")
+		},
+		decodeFn(json.Unmarshal),
+	}
+}
+
+// NewJsonMin returns a Codec that reads and writes to JSON. The JSON written
+// is not indented.
+func NewJsonMin() Codec {
+	return codec{
+		func(v interface{}) ([]byte, error) {
+			return json.Marshal(v)
 		},
 		decodeFn(json.Unmarshal),
 	}
@@ -66,4 +79,18 @@ func (c codec) Decode(in io.Reader, v interface{}) error {
 	}
 
 	return c.decodeFn(data, v)
+}
+
+func EncodeToString(codec Codec, obj interface{}) (string, error) {
+	b := bytes.NewBuffer(nil)
+	if err := codec.Encode(obj, b); err != nil {
+		return "", err
+	}
+	return b.String(), nil
+}
+
+func DecodeFromString(codec Codec, src string, dest interface{}) error {
+	r := bytes.NewReader([]byte(src))
+	err := codec.Decode(r, dest)
+	return err
 }
