@@ -23,7 +23,7 @@ import (
 	"fmt"
 )
 
-// FromFlags produces an Codec from provided flags
+// FromFlags produces an Codec from a flag.FlagSet.
 type FromFlags interface {
 	// Validate verifies that all necessary flags are provided
 	Validate() error

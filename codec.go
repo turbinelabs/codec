@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Package codec provides a simple interface for encoding and decoding values
+// with JSON and YAML implementations, along with a means to configure them
+// with a flag.FlagSet.
 package codec
 
 //go:generate mockgen -source $GOFILE -destination mock_$GOFILE -package $GOPACKAGE
