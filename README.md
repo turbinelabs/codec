@@ -13,8 +13,9 @@
 
 # turbinelabs/codec
 
+[![Apache 2.0](https://img.shields.io/hexpm/l/plug.svg)](LICENSE)
 [![GoDoc](https://https://godoc.org/github.com/turbinelabs/codec?status.svg)](https://https://godoc.org/github.com/turbinelabs/codec)
-[https://circleci.com/gh/turbinelabs/codec](![CircleCI`](https://circleci.com/gh/turbinelabs/codec.svg?style=svg))
+[![CircleCI](https://circleci.com/gh/turbinelabs/codec.svg?style=shield)](https://circleci.com/gh/turbinelabs/codec)
 
 The codec project provides a simple interface for encoding and decoding values
 with JSON and YAML implementations, along with a means to configure them
