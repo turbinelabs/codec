@@ -35,10 +35,10 @@ open source projects together, or to vendor them with the same git tag.
 A [gomock](https://github.com/golang/mock)-based MockCodec is provided.
 
 Additionally, we vendor
-[github.com/ghodss/yaml](https://github.com/ghodss/yaml).
-This should be considered an opaque implementation detail,
-see [Vendoring](http://github.com/turbinelabs/developer/blob/master/README.md#vendoring) for more detail.
-
+[github.com/ghodss/yaml](https://github.com/ghodss/yaml). This should be
+considered an opaque implementation detail, see
+[Vendoring](http://github.com/turbinelabs/developer/blob/master/README.md#vendoring)
+for more discussion.
 
 ## Install
 
