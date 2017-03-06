@@ -19,8 +19,9 @@ package codec
 //go:generate mockgen -source $GOFILE -destination mock_$GOFILE -package $GOPACKAGE
 
 import (
-	"flag"
 	"fmt"
+
+	tbnflag "github.com/turbinelabs/nonstdlib/flag"
 )
 
 // FromFlags produces an Codec from a flag.FlagSet.
@@ -37,7 +38,7 @@ type FromFlags interface {
 
 // NewFromFlags produces a FromFlags, and installs necessary
 // configuration flags into the provided FlagSet
-func NewFromFlags(flagset *flag.FlagSet) FromFlags {
+func NewFromFlags(flagset tbnflag.FlagSet) FromFlags {
 	ff := &fromFlags{}
 	flagset.StringVar(&ff.format, "format", "json", "The I/O format (json or yaml)")
 	return ff

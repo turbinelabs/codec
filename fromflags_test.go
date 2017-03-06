@@ -17,9 +17,9 @@ limitations under the License.
 package codec
 
 import (
-	"flag"
 	"testing"
 
+	tbnflag "github.com/turbinelabs/nonstdlib/flag"
 	"github.com/turbinelabs/test/assert"
 )
 
@@ -38,24 +38,24 @@ func TestFromFlagsValidate(t *testing.T) {
 }
 
 func TestNewFromFlagsJson(t *testing.T) {
-	var fs flag.FlagSet
-	ff := NewFromFlags(&fs)
+	fs := tbnflag.NewTestFlagSet()
+	ff := NewFromFlags(fs)
 	fs.Parse([]string{"-format", "json"})
 
 	testCodecEncodeDecodeJson(t, ff.Make())
 }
 
 func TestNewFromFlagsYaml(t *testing.T) {
-	var fs flag.FlagSet
-	ff := NewFromFlags(&fs)
+	fs := tbnflag.NewTestFlagSet()
+	ff := NewFromFlags(fs)
 	fs.Parse([]string{"-format", "yaml"})
 
 	testCodecEncodeDecodeYaml(t, ff.Make())
 }
 
 func TestNewFromFlagsDefault(t *testing.T) {
-	var fs flag.FlagSet
-	ff := NewFromFlags(&fs)
+	fs := tbnflag.NewTestFlagSet()
+	ff := NewFromFlags(fs)
 	fs.Parse([]string{"-format", "garbage"})
 
 	testCodecEncodeDecodeJson(t, ff.Make())
