@@ -17,6 +17,7 @@
 [![GoDoc](https://godoc.org/github.com/turbinelabs/codec?status.svg)](https://godoc.org/github.com/turbinelabs/codec)
 [![CircleCI](https://circleci.com/gh/turbinelabs/codec.svg?style=shield)](https://circleci.com/gh/turbinelabs/codec)
 [![Go Report Card](https://goreportcard.com/badge/github.com/turbinelabs/codec)](https://goreportcard.com/report/github.com/turbinelabs/codec)
+[![codecov](https://codecov.io/gh/turbinelabs/codec/branch/master/graph/badge.svg)](https://codecov.io/gh/turbinelabs/codec)
 
 The codec project provides a simple interface for encoding and decoding values
 with JSON and YAML implementations, along with a means to configure them
