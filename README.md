@@ -25,7 +25,7 @@ with a flag.FlagSet.
 
 ## Requirements
 
-- Go 1.8 or later (previous versions may work, but we don't build or test against them)
+- Go 1.9 or later (previous versions may work, but we don't build or test against them)
 
 ## Dependencies
 
