@@ -13,7 +13,7 @@
 
 # turbinelabs/codec
 
-[![Apache 2.0](https://img.shields.io/hexpm/l/plug.svg)](LICENSE)
+[![Apache 2.0](https://img.shields.io/badge/license-apache%202.0-blue.svg)](LICENSE)
 [![GoDoc](https://godoc.org/github.com/turbinelabs/codec?status.svg)](https://godoc.org/github.com/turbinelabs/codec)
 [![CircleCI](https://circleci.com/gh/turbinelabs/codec.svg?style=shield)](https://circleci.com/gh/turbinelabs/codec)
 [![Go Report Card](https://goreportcard.com/badge/github.com/turbinelabs/codec)](https://goreportcard.com/report/github.com/turbinelabs/codec)
