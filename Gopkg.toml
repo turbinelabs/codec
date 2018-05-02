@@ -1,7 +1,8 @@
 ignored = [
   "github.com/turbinelabs/nonstdlib*",
   "github.com/turbinelabs/test*",
-  "github.com/golang/mock/*"
+  "github.com/golang/mock/*",
+  "golang.org/x/net",
 ]
 
 [[constraint]]
