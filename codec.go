@@ -38,6 +38,7 @@ import (
 type Codec interface {
 	// Encode a value to a writer, based on the --format flag
 	Encode(interface{}, io.Writer) error
+
 	// Decode a value from a reader, based on the --format flag
 	Decode(io.Reader, interface{}) error
 }
@@ -100,6 +101,7 @@ func (c codec) Decode(in io.Reader, v interface{}) error {
 	return c.decodeFn(data, v)
 }
 
+// EncodeToString uses the given Codec to encode an object to a string
 func EncodeToString(codec Codec, obj interface{}) (string, error) {
 	b := bytes.NewBuffer(nil)
 	if err := codec.Encode(obj, b); err != nil {
@@ -108,6 +110,8 @@ func EncodeToString(codec Codec, obj interface{}) (string, error) {
 	return b.String(), nil
 }
 
+// DecodeFromString uses the given codec to decode the given string
+// into the given destination.
 func DecodeFromString(codec Codec, src string, dest interface{}) error {
 	r := bytes.NewReader([]byte(src))
 	err := codec.Decode(r, dest)

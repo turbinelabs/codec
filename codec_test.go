@@ -29,17 +29,17 @@ type brokenRW struct {
 	err error
 }
 
-func (_ brokenRW) Read(p []byte) (int, error) {
+func (brokenRW) Read(p []byte) (int, error) {
 	return 0, io.ErrNoProgress
 }
 
-func (_ brokenRW) Write(p []byte) (int, error) {
-	return 0, errors.New("Gah!")
+func (brokenRW) Write(p []byte) (int, error) {
+	return 0, errors.New("gah")
 }
 
 func testCodecEncodeDecode(t *testing.T, c Codec, want string) {
 	buf := &bytes.Buffer{}
-	broke := brokenRW{errors.New("Gah!")}
+	broke := brokenRW{errors.New("gah")}
 	v := []int{1, 2, 3}
 	got := []int{}
 
@@ -56,6 +56,28 @@ func testCodecEncodeDecode(t *testing.T, c Codec, want string) {
 	err = c.Decode(buf, &got)
 	assert.Nil(t, err)
 	assert.DeepEqual(t, got, v)
+}
+
+func TestCodecEncodeErr(t *testing.T) {
+	wantErr := errors.New("gah")
+	c := codec{encodeFn: func(got interface{}) ([]byte, error) {
+		assert.Equal(t, "foo", got)
+		return nil, wantErr
+	}}
+	_, gotErr := EncodeToString(c, "foo")
+	assert.Equal(t, wantErr, gotErr)
+}
+
+func TestCodecDecodeErr(t *testing.T) {
+	wantErr := errors.New("gah")
+	data := "foo"
+	c := codec{decodeFn: func(gotBytes []byte, got interface{}) error {
+		assert.Equal(t, string(gotBytes), "bar")
+		assert.Equal(t, got, &data)
+		return wantErr
+	}}
+	gotErr := DecodeFromString(c, "bar", &data)
+	assert.Equal(t, wantErr, gotErr)
 }
 
 func TestCodecEncodeDecodeJson(t *testing.T) {

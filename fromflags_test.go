@@ -32,9 +32,11 @@ func TestFromFlagsValidate(t *testing.T) {
 
 	ff.format = "json"
 	assert.Nil(t, ff.Validate())
+	assert.Equal(t, ff.Type(), "json")
 
 	ff.format = "yaml"
 	assert.Nil(t, ff.Validate())
+	assert.Equal(t, ff.Type(), "yaml")
 }
 
 func TestNewFromFlagsJson(t *testing.T) {
