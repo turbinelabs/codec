@@ -23,6 +23,7 @@ import (
 	"testing"
 
 	"github.com/turbinelabs/test/assert"
+	testio "github.com/turbinelabs/test/io"
 )
 
 type brokenRW struct {
@@ -123,4 +124,43 @@ func TestDecodeFromString(t *testing.T) {
 	err := DecodeFromString(c, in, &got)
 	assert.Nil(t, err)
 	assert.DeepEqual(t, got, want)
+}
+
+func TestYAMLToJSONToYAML(t *testing.T) {
+	json := `{"foo":[{"bar":42},{"baz":"blar"}]}`
+
+	yaml := `foo:
+- bar: 42
+- baz: blar
+`
+	jsonBuf := bytes.NewBufferString(json)
+	yamlBuf := bytes.NewBufferString(yaml)
+
+	gotBuf := &bytes.Buffer{}
+	assert.Nil(t, JSONToYAML(jsonBuf, gotBuf))
+	assert.Equal(t, gotBuf.String(), yaml)
+
+	gotBuf = &bytes.Buffer{}
+	assert.Nil(t, YAMLToJSON(yamlBuf, gotBuf))
+	assert.Equal(t, gotBuf.String(), json)
+}
+
+func TestConvertErrs(t *testing.T) {
+	err := convert(testio.NewFailingReader(), nil, nil)
+	assert.ErrorContains(t, err, testio.FailingReaderMessage)
+
+	err = convert(bytes.NewBufferString("foo"), nil, func(data []byte) ([]byte, error) {
+		assert.Equal(t, string(data), "foo")
+		return nil, errors.New("gah")
+	})
+	assert.ErrorContains(t, err, "gah")
+
+	err = convert(
+		bytes.NewBufferString("foo"),
+		testio.NewFailingWriter(),
+		func(data []byte) ([]byte, error) {
+			return data, nil
+		},
+	)
+	assert.ErrorContains(t, err, "failed to write: foo")
 }

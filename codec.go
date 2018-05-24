@@ -117,3 +117,38 @@ func DecodeFromString(codec Codec, src string, dest interface{}) error {
 	err := codec.Decode(r, dest)
 	return err
 }
+
+// JSONBytesToYAMLBytes concerts JSON bytes to YAML bytes
+func JSONBytesToYAMLBytes(data []byte) ([]byte, error) {
+	return yaml.JSONToYAML(data)
+}
+
+// YAMLBytesToJSONBytes concerts YAML bytes to JSON bytes
+func YAMLBytesToJSONBytes(data []byte) ([]byte, error) {
+	return yaml.YAMLToJSON(data)
+}
+
+func convert(in io.Reader, out io.Writer, f func(data []byte) ([]byte, error)) error {
+	data, err := ioutil.ReadAll(in)
+	if err != nil {
+		return err
+	}
+	data, err = f(data)
+	if err != nil {
+		return err
+	}
+	_, err = out.Write(data)
+	return err
+}
+
+// JSONToYAML reads JSON from the given Reader, converts it to YAML, and writes
+// it to the given writer.
+func JSONToYAML(in io.Reader, out io.Writer) error {
+	return convert(in, out, JSONBytesToYAMLBytes)
+}
+
+// YAMLToJSON reads YAML from the given Reader, converts it to JSON, and writes
+// it to the given writer.
+func YAMLToJSON(in io.Reader, out io.Writer) error {
+	return convert(in, out, YAMLBytesToJSONBytes)
+}
